@@ -1,6 +1,6 @@
 package com.godlife_study.back.dto.response.studyService;
 
-import com.godlife_study.back.common.StudyNoticeListItem;
+import com.godlife_study.back.common.object.StudyNoticeListItem;
 import com.godlife_study.back.dto.response.ResponseCode;
 import com.godlife_study.back.dto.response.ResponseDto;
 import com.godlife_study.back.dto.response.ResponseMessage;

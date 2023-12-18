@@ -1,4 +1,4 @@
-package com.godlife_study.back.common;
+package com.godlife_study.back.common.object;
 
 import lombok.Getter;
 import lombok.Setter;
