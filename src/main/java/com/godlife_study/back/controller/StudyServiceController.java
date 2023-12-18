@@ -98,4 +98,14 @@ public class StudyServiceController {
         ResponseEntity<? super PostStudyTodoListResponseDto> response = studyService.postTodoList(dto,createStudyUserEmail,studyNumber);
         return response;
     }
+
+    @PatchMapping("/{studyNumber}/todolist")
+    public ResponseEntity<? super PatchStudyTodoListResponseDto> patchTodoList(
+        @RequestBody @Valid PatchStudyTodoListRequestDto dto,
+        @AuthenticationPrincipal String createStudyUserEmail,
+        @PathVariable("studyNumber") Integer studyNumber
+    ){
+        ResponseEntity<? super PatchStudyTodoListResponseDto> response = studyService.patchTodoList(dto,createStudyUserEmail,studyNumber);
+        return response;
+    }
 }
