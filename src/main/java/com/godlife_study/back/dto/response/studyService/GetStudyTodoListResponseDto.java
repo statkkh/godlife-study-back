@@ -8,7 +8,7 @@ import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import com.godlife_study.back.common.StudyTodoListItem;
+import com.godlife_study.back.common.object.StudyTodoListItem;
 import com.godlife_study.back.dto.response.ResponseCode;
 import com.godlife_study.back.dto.response.ResponseDto;
 import com.godlife_study.back.dto.response.ResponseMessage;

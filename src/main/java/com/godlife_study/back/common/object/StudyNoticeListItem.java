@@ -1,4 +1,4 @@
-package com.godlife_study.back.common;
+package com.godlife_study.back.common.object;
 
 import java.util.ArrayList;
 import java.util.List;
