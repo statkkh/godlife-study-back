@@ -69,4 +69,14 @@ public class StudyServiceController {
         ResponseEntity<? super PatchStudyNoticeResponseDto> response = studyService.patchNotice(dto,createStudyUserEmail,studyNumber);
         return response;
     }
+
+    @DeleteMapping("/{studyNumber}/notice/{studyNoticeNumber}")
+    public ResponseEntity<? super DeleteStudyNoticeResponseDto> deleteNotice(
+        @AuthenticationPrincipal String createStudyUserEmail,
+        @PathVariable("studyNumber") Integer studyNumber,
+        @PathVariable("studyNoticeNumber") Integer studyNoticeNumber
+    ){
+        ResponseEntity<? super DeleteStudyNoticeResponseDto> response = studyService.deleteNotice(createStudyUserEmail,studyNumber,studyNoticeNumber);
+        return response;
+    }
 }
