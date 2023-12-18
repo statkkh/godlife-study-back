@@ -108,4 +108,14 @@ public class StudyServiceController {
         ResponseEntity<? super PatchStudyTodoListResponseDto> response = studyService.patchTodoList(dto,createStudyUserEmail,studyNumber);
         return response;
     }
+
+    @DeleteMapping("/{studyNumber}/todolist/{studyTodoListNumber}")
+    public ResponseEntity<? super DeleteStudyTodoListResponseDto> deleteTodoList(
+        @AuthenticationPrincipal String createStudyUserEmail,
+        @PathVariable("studyNumber") Integer studyNumber,
+        @PathVariable("studyTodoListNumber") Integer studyTodoListNumber
+    ){
+        ResponseEntity<? super DeleteStudyTodoListResponseDto> response = studyService.deleteTodoList(createStudyUserEmail,studyNumber,studyTodoListNumber);
+        return response;
+    }   
 }
