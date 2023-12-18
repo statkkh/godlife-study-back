@@ -130,6 +130,32 @@ public class StudyServiceImplement implements StudyService {
         return PatchStudyNoticeResponseDto.success();
     }
 
+    @Override
+    public ResponseEntity<? super DeleteStudyNoticeResponseDto> deleteNotice(String createStudyUserEmail,Integer studyNumber, Integer studyNoticeNumber) {
+        
+        try {
+            boolean existedUser = userRepository.existsByUserEmail(createStudyUserEmail);
+            if(!existedUser ) return DeleteStudyNoticeResponseDto.notExistUser();
+
+            StudyEntity studyEntity = studyRepository.findByStudyNumber(studyNumber);
+            if( studyEntity == null) return DeleteStudyNoticeResponseDto.notExistStudy();
+
+            boolean equalCreater = studyEntity.getCreateStudyUserEmail().equals(createStudyUserEmail);
+            if(!equalCreater) return DeleteStudyNoticeResponseDto.noPermission();
+
+            StudyNoticeEntity studyNoticeEntity = studyNoticeRepository.findByStudyNoticeNumber(studyNoticeNumber);
+            if( studyNoticeEntity == null) return DeleteStudyNoticeResponseDto.notExistNotice();
+
+            studyNoticeRepository.delete(studyNoticeEntity);
+
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.databaseError();            
+        }
+
+        return DeleteStudyNoticeResponseDto.success();
+    }
+
 
 
 
