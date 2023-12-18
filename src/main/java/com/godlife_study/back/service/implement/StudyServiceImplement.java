@@ -231,6 +231,32 @@ public class StudyServiceImplement implements StudyService {
         return PatchStudyTodoListResponseDto.success();
     }
 
+    @Override
+    public ResponseEntity<? super DeleteStudyTodoListResponseDto> deleteTodoList(String createStudyUserEmail,Integer studyNumber, Integer studyTodoListNumber) {
+        
+        try {
+            boolean existedUser = userRepository.existsByUserEmail(createStudyUserEmail);
+            if(!existedUser ) return DeleteStudyTodoListResponseDto.notExistUser();
+
+            StudyEntity studyEntity = studyRepository.findByStudyNumber(studyNumber);
+            if( studyEntity == null) return DeleteStudyTodoListResponseDto.notExistStudy();
+
+            boolean equalCreater = studyEntity.getCreateStudyUserEmail().equals(createStudyUserEmail);
+            if(!equalCreater) return DeleteStudyTodoListResponseDto.noPermission();
+
+            StudyTodoListEntity studyTodoListEntity = studyTodoListRepository.findByStudyListNumber(studyTodoListNumber);
+            if( studyTodoListEntity == null) return DeleteStudyTodoListResponseDto.notExistTodo();
+
+            studyTodoListRepository.delete(studyTodoListEntity);
+            
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+
+        return DeleteStudyTodoListResponseDto.success();
+    }
+
     
 
 
