@@ -26,4 +26,5 @@ public interface StudyService {
     ResponseEntity<? super DeleteStudyNoticeResponseDto> deleteNotice(String createStudyUserEmail, Integer studyNumber, Integer studyNoticeNumber);
 
     ResponseEntity<? super GetStudyTodoListResponseDto> getTodoList(String userEmail,Integer studyNumber);
+    ResponseEntity<? super PostStudyTodoListResponseDto> postTodoList(PostStudyTodoListRequestDto dto,String createStudyUserEmail, Integer studyNumber);
 }
