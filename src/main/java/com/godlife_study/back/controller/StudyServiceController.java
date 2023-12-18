@@ -79,4 +79,13 @@ public class StudyServiceController {
         ResponseEntity<? super DeleteStudyNoticeResponseDto> response = studyService.deleteNotice(createStudyUserEmail,studyNumber,studyNoticeNumber);
         return response;
     }
+
+    @GetMapping("/{studyNumber}/todolist")
+    public ResponseEntity<? super GetStudyTodoListResponseDto> getTodoList(
+        @AuthenticationPrincipal String userEmail,
+        @PathVariable("studyNumber") Integer studyNumber
+    ) {
+        ResponseEntity<? super GetStudyTodoListResponseDto> response = studyService.getTodoList(userEmail,studyNumber);
+        return response;
+    }
 }
