@@ -180,6 +180,30 @@ public class StudyServiceImplement implements StudyService {
 
     }
 
+    @Override
+    public ResponseEntity<? super PostStudyTodoListResponseDto> postTodoList(PostStudyTodoListRequestDto dto,String createStudyUserEmail, Integer studyNumber) {
+    
+        try {
+            boolean existedUser = userRepository.existsByUserEmail(createStudyUserEmail);
+            if(!existedUser ) return PostStudyTodoListResponseDto.notExistUser();
+
+            StudyEntity studyEntity = studyRepository.findByStudyNumber(studyNumber);
+            if( studyEntity == null) return PostStudyTodoListResponseDto.notExistStudy();
+
+            boolean equalCreater = studyEntity.getCreateStudyUserEmail().equals(createStudyUserEmail);
+            if(!equalCreater) return PostStudyTodoListResponseDto.noPermission();
+
+            StudyTodoListEntity studyTodoListEntity = new StudyTodoListEntity(dto,studyNumber);
+            studyTodoListRepository.save(studyTodoListEntity);
+
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.databaseError();   
+        }
+
+        return PostStudyTodoListResponseDto.success();
+    }
+
     
 
 
