@@ -80,12 +80,22 @@ public class StudyServiceController {
         return response;
     }
 
-    @GetMapping("/{studyNumber}/todolist")
+    @GetMapping("/{studyNumber}/todoList")
     public ResponseEntity<? super GetStudyTodoListResponseDto> getTodoList(
         @AuthenticationPrincipal String userEmail,
         @PathVariable("studyNumber") Integer studyNumber
     ) {
         ResponseEntity<? super GetStudyTodoListResponseDto> response = studyService.getTodoList(userEmail,studyNumber);
+        return response;
+    }
+
+    @PostMapping("/{studyNumber}/todolist")
+    public ResponseEntity<? super PostStudyTodoListResponseDto> postTodoList(
+        @RequestBody @Valid PostStudyTodoListRequestDto dto,
+        @AuthenticationPrincipal String createStudyUserEmail,
+        @PathVariable("studyNumber") Integer studyNumber
+    ){
+        ResponseEntity<? super PostStudyTodoListResponseDto> response = studyService.postTodoList(dto,createStudyUserEmail,studyNumber);
         return response;
     }
 }
