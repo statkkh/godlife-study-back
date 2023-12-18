@@ -50,5 +50,14 @@ public class StudyServiceController {
         return response;
     }    
 
-
+    @PostMapping("/{studyNumber}/notice")
+    public ResponseEntity<? super PostStudyNoticeResponseDto> postNotice(
+        @RequestBody @Valid  PostStudyNoticeRequestDto dto,
+        @AuthenticationPrincipal String createStudyUserEmail,
+        @PathVariable("studyNumber") Integer studyNumber
+    ) {
+        ResponseEntity<? super PostStudyNoticeResponseDto> response = studyService.postNotice(dto,createStudyUserEmail,studyNumber);
+        return response;
+    }
+        
 }

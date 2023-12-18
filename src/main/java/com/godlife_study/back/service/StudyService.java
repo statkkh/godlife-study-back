@@ -21,5 +21,5 @@ import com.godlife_study.back.dto.response.studyService.DeleteStudyTodoListRespo
 public interface StudyService {
     
     ResponseEntity<? super GetStudyNoticeListResponseDto> getNoticeList(String userEmail,Integer studyNumber);
-
+    ResponseEntity<? super PostStudyNoticeResponseDto> postNotice(PostStudyNoticeRequestDto dto,String createStudyUserEmail, Integer studyNumber);        
 }

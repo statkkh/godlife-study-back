@@ -75,6 +75,34 @@ public class StudyServiceImplement implements StudyService {
         return GetStudyNoticeListResponseDto.success(resultSets);
     }
 
+    @Override
+    public ResponseEntity<? super PostStudyNoticeResponseDto> postNotice(PostStudyNoticeRequestDto dto, String createStudyUserEmail, Integer studyNumber) {
+        
+        try {
+            
+            // 접속 유저가 존재하는지 확인 여부
+            boolean existedUser = userRepository.existsByUserEmail(createStudyUserEmail);
+            if(!existedUser ) return PostStudyNoticeResponseDto.notExistUser();
+
+            // 스터디 방 존재 여부
+            StudyEntity studyEntity = studyRepository.findByStudyNumber(studyNumber);
+            if( studyEntity == null) return PostStudyNoticeResponseDto.notExistStudy();
+
+            boolean equalCreater = studyEntity.getCreateStudyUserEmail().equals(createStudyUserEmail);
+            if(!equalCreater) return PostStudyNoticeResponseDto.noPermission();
+                        
+
+            StudyNoticeEntity studyNoticeEntity = new StudyNoticeEntity(dto,studyNumber);
+            studyNoticeRepository.save(studyNoticeEntity);
+
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+
+        return PostStudyNoticeResponseDto.success();
+    }
+
 
 
 
