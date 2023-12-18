@@ -7,13 +7,11 @@ import org.springframework.stereotype.Service;
 import com.godlife_study.back.dto.response.ResponseDto;
 
 import com.godlife_study.back.dto.request.studyService.PatchStudyNoticeRequestDto;
-import com.godlife_study.back.dto.request.studyService.PatchStudyTodoListRequestDto;
 import com.godlife_study.back.dto.request.studyService.PostStudyNoticeRequestDto;
 
 import com.godlife_study.back.dto.response.studyService.GetStudyNoticeListResponseDto;
 import com.godlife_study.back.dto.response.studyService.PostStudyNoticeResponseDto;
 import com.godlife_study.back.dto.response.studyService.PatchStudyNoticeResponseDto;
-import com.godlife_study.back.dto.response.studyService.PatchStudyTodoListResponseDto;
 import com.godlife_study.back.dto.response.studyService.DeleteStudyNoticeResponseDto;
 
 import com.godlife_study.back.dto.request.studyService.PostStudyTodoListRequestDto;
@@ -101,6 +99,35 @@ public class StudyServiceImplement implements StudyService {
         }
 
         return PostStudyNoticeResponseDto.success();
+    }
+
+    @Override
+    public ResponseEntity<? super PatchStudyNoticeResponseDto> patchNotice(PatchStudyNoticeRequestDto dto,String createStudyUserEmail, Integer studyNumber) {
+
+
+        try {
+            
+            boolean existedUser = userRepository.existsByUserEmail(createStudyUserEmail);
+            if(!existedUser ) return PatchStudyNoticeResponseDto.notExistUser();
+
+            StudyEntity studyEntity = studyRepository.findByStudyNumber(studyNumber);
+            if( studyEntity == null) return PatchStudyNoticeResponseDto.notExistStudy();
+
+            boolean equalCreater = studyEntity.getCreateStudyUserEmail().equals(createStudyUserEmail);
+            if(!equalCreater) return PatchStudyNoticeResponseDto.noPermission();
+
+            StudyNoticeEntity studyNoticeEntity = studyNoticeRepository.findByStudyNoticeNumber(dto.getStudyNoticeNumber());
+            if( studyNoticeEntity == null) return PatchStudyNoticeResponseDto.notExistNotice();
+
+            studyNoticeEntity.patchNotice(dto);
+            studyNoticeRepository.save(studyNoticeEntity);
+
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+
+        return PatchStudyNoticeResponseDto.success();
     }
 
 

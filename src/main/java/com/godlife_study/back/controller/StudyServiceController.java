@@ -60,4 +60,13 @@ public class StudyServiceController {
         return response;
     }
         
+    @PatchMapping("/{studyNumber}/notice")
+    public ResponseEntity<? super PatchStudyNoticeResponseDto> patchNotice(
+        @RequestBody @Valid PatchStudyNoticeRequestDto dto,
+        @AuthenticationPrincipal String createStudyUserEmail,
+        @PathVariable("studyNumber") Integer studyNumber
+    ){
+        ResponseEntity<? super PatchStudyNoticeResponseDto> response = studyService.patchNotice(dto,createStudyUserEmail,studyNumber);
+        return response;
+    }
 }

@@ -22,4 +22,5 @@ public interface StudyService {
     
     ResponseEntity<? super GetStudyNoticeListResponseDto> getNoticeList(String userEmail,Integer studyNumber);
     ResponseEntity<? super PostStudyNoticeResponseDto> postNotice(PostStudyNoticeRequestDto dto,String createStudyUserEmail, Integer studyNumber);        
+    ResponseEntity<? super PatchStudyNoticeResponseDto> patchNotice(PatchStudyNoticeRequestDto dto ,String createStudyUserEmail, Integer studyNumber);
 }
