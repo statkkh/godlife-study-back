@@ -21,7 +21,7 @@ public class StudyUserListItem {
         this.studyGrade = resultSet.getStudyGrade();
     }
 
-    public static List<StudyUserListItem> getUserList(List<StudyUserListResultSet> resultSets) {
+    public static List<StudyUserListItem> getStudyUserList(List<StudyUserListResultSet> resultSets) {
         List<StudyUserListItem> list = new ArrayList<>();
         for(StudyUserListResultSet resultSet :  resultSets){
             StudyUserListItem StudyUserListItem = new StudyUserListItem(resultSet);
