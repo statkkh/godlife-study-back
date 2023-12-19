@@ -51,7 +51,7 @@ public class StudyServiceController {
         return response;
     }
 
-    @PostMapping("/service/{studyNumber}/study-user-list/${studyGrade}")
+    @PostMapping("/service/{studyNumber}/study-user-list/{studyGrade}")
     public ResponseEntity<? super PostStudyUserListResponseDto> postStudyUserList(
         @AuthenticationPrincipal String createStudyUserEmail,
         @PathVariable("studyNumber") Integer studyNumber,
