@@ -20,6 +20,7 @@ import com.godlife_study.back.dto.request.studyService.PatchStudyTodoListRequest
 import com.godlife_study.back.dto.response.studyService.GetStudyTodoListResponseDto;
 import com.godlife_study.back.dto.response.studyService.GetStudyUserListResponseDto;
 import com.godlife_study.back.dto.response.studyService.PostStudyTodoListResponseDto;
+import com.godlife_study.back.dto.response.studyService.PostStudyUserListResponseDto;
 import com.godlife_study.back.dto.response.studyService.PatchStudyTodoListResponseDto;
 import com.godlife_study.back.dto.response.studyService.DeleteStudyTodoListResponseDto;
 
@@ -27,7 +28,7 @@ import com.godlife_study.back.dto.response.studyService.DeleteStudyTodoListRespo
 import com.godlife_study.back.entity.StudyEntity;
 import com.godlife_study.back.entity.StudyNoticeEntity;
 import com.godlife_study.back.entity.StudyTodoListEntity;
-
+import com.godlife_study.back.entity.StudyUserListEntity;
 import com.godlife_study.back.repository.UserRepository;
 import com.godlife_study.back.repository.StudyRepository;
 import com.godlife_study.back.repository.StudyNoticeRepository;
@@ -75,6 +76,26 @@ public class StudyServiceImplement implements StudyService {
         return GetStudyUserListResponseDto.success(studyUserListResultSets);
     }
     
+    @Override
+    public ResponseEntity<? super PostStudyUserListResponseDto> postStudyUserList(String userEmail, Integer studyNumber, String studyGrade) {
+        
+        try {
+
+            boolean existedUser = userRepository.existsByUserEmail(userEmail);
+            if(!existedUser ) return PostStudyUserListResponseDto.notExistUser();
+
+            boolean existedStudy = studyRepository.existsByStudyNumber(studyNumber);
+            if(!existedStudy ) return PostStudyUserListResponseDto.notExistStudy();
+            
+            StudyUserListEntity studyUserListEntity = new StudyUserListEntity(studyNumber,userEmail,studyGrade);
+            studyUserListRepository.save(studyUserListEntity);            
+
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+        return PostStudyUserListResponseDto.success();
+    }
 
     private final StudyNoticeRepository studyNoticeRepository;
 
@@ -285,6 +306,8 @@ public class StudyServiceImplement implements StudyService {
 
         return DeleteStudyTodoListResponseDto.success();
     }
+
+
 
 
     
