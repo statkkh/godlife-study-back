@@ -30,4 +30,9 @@ public class PostStudyMaterialResponseDto extends ResponseDto {
         ResponseDto result = new ResponseDto(ResponseCode.NOT_EXIST_STUDY, ResponseMessage.NOT_EXIST_STUDY);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result);
     }      
+
+    public static ResponseEntity<ResponseDto> noPermission(){
+        ResponseDto result = new ResponseDto(ResponseCode.NO_PERMISSION, ResponseMessage.NO_PERMISSION);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result);
+    }
 }
