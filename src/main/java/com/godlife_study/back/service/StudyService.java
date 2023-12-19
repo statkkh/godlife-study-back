@@ -20,6 +20,7 @@ import com.godlife_study.back.dto.response.studyService.PostStudyTodoListRespons
 import com.godlife_study.back.dto.response.studyService.PostStudyUserListResponseDto;
 import com.godlife_study.back.dto.response.studyService.PatchStudyTodoListResponseDto;
 import com.godlife_study.back.dto.response.studyService.DeleteStudyTodoListResponseDto;
+import com.godlife_study.back.dto.response.studyService.GetStudyMaterialListResponseDto;
 
 public interface StudyService {
     ResponseEntity<? super GetStudyResponseDto> getStudy(Integer studyNumber,String userEmail);
@@ -34,4 +35,14 @@ public interface StudyService {
     ResponseEntity<? super PostStudyTodoListResponseDto> postTodoList(PostStudyTodoListRequestDto dto,String createStudyUserEmail, Integer studyNumber);
     ResponseEntity<? super PatchStudyTodoListResponseDto> patchTodoList(PatchStudyTodoListRequestDto dto,String createStudyUserEmail, Integer studyNumber);
     ResponseEntity<? super DeleteStudyTodoListResponseDto> deleteTodoList(String createStudyUserEmail, Integer studyNumber, Integer studyTodoListNumber);
+
+    ResponseEntity<? super GetStudyMaterialListResponseDto> getMaterialList(String userEmail,Integer studyNumber);
+
+
+
+
+
+    
+
+
 }

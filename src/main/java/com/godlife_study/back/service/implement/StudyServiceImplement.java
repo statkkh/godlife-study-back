@@ -24,17 +24,18 @@ import com.godlife_study.back.dto.response.studyService.PostStudyTodoListRespons
 import com.godlife_study.back.dto.response.studyService.PostStudyUserListResponseDto;
 import com.godlife_study.back.dto.response.studyService.PatchStudyTodoListResponseDto;
 import com.godlife_study.back.dto.response.studyService.DeleteStudyTodoListResponseDto;
-
-
+import com.godlife_study.back.dto.response.studyService.GetStudyMaterialListResponseDto;
 import com.godlife_study.back.entity.StudyEntity;
 import com.godlife_study.back.entity.StudyNoticeEntity;
 import com.godlife_study.back.entity.StudyTodoListEntity;
 import com.godlife_study.back.entity.StudyUserListEntity;
 import com.godlife_study.back.repository.UserRepository;
 import com.godlife_study.back.repository.StudyRepository;
+import com.godlife_study.back.repository.StudyMaterialRepository;
 import com.godlife_study.back.repository.StudyNoticeRepository;
 import com.godlife_study.back.repository.StudyTodoListRepository;
 import com.godlife_study.back.repository.StudyUserListRepository;
+import com.godlife_study.back.repository.resultSet.StudyMaterialListResultSet;
 import com.godlife_study.back.repository.resultSet.StudyNoticeListResultSet;
 import com.godlife_study.back.repository.resultSet.StudyTodoListResultSet;
 import com.godlife_study.back.repository.resultSet.StudyUserListResultSet;
@@ -331,6 +332,30 @@ public class StudyServiceImplement implements StudyService {
         }
 
         return DeleteStudyTodoListResponseDto.success();
+    }
+
+    private final StudyMaterialRepository studyMaterialRepository;
+    
+    @Override
+    public ResponseEntity<? super GetStudyMaterialListResponseDto> getMaterialList(String userEmail,Integer studyNumber) {
+    
+        List<StudyMaterialListResultSet> resultSets = new ArrayList<>();
+
+        try {
+            boolean existedUser = userRepository.existsByUserEmail(userEmail);
+            if(!existedUser ) return GetStudyMaterialListResponseDto.notExistUser();
+
+            StudyEntity studyEntity = studyRepository.findByStudyNumber(studyNumber);
+            if(studyEntity == null)  return GetStudyMaterialListResponseDto.notExistStudy();
+    
+            resultSets = studyMaterialRepository.findByStudyNumber(studyNumber);
+
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+
+        return GetStudyMaterialListResponseDto.success(resultSets);
     }
 
 
