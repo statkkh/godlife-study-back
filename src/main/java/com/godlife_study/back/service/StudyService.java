@@ -13,12 +13,13 @@ import com.godlife_study.back.dto.response.studyService.DeleteStudyNoticeRespons
 
 import com.godlife_study.back.dto.request.studyService.PostStudyTodoListRequestDto;
 import com.godlife_study.back.dto.request.studyService.PatchStudyTodoListRequestDto;
-
+import com.godlife_study.back.dto.request.studyService.PostStudyMaterialRequestDto;
 import com.godlife_study.back.dto.response.studyService.GetStudyTodoListResponseDto;
 import com.godlife_study.back.dto.response.studyService.GetStudyUserListResponseDto;
 import com.godlife_study.back.dto.response.studyService.PostStudyTodoListResponseDto;
 import com.godlife_study.back.dto.response.studyService.PostStudyUserListResponseDto;
 import com.godlife_study.back.dto.response.studyService.PatchStudyTodoListResponseDto;
+import com.godlife_study.back.dto.response.studyService.PostStudyMaterialResponseDto;
 import com.godlife_study.back.dto.response.studyService.DeleteStudyTodoListResponseDto;
 import com.godlife_study.back.dto.response.studyService.GetStudyMaterialListResponseDto;
 
@@ -37,7 +38,7 @@ public interface StudyService {
     ResponseEntity<? super DeleteStudyTodoListResponseDto> deleteTodoList(String createStudyUserEmail, Integer studyNumber, Integer studyTodoListNumber);
 
     ResponseEntity<? super GetStudyMaterialListResponseDto> getMaterialList(String userEmail,Integer studyNumber);
-
+    ResponseEntity<? super PostStudyMaterialResponseDto> postMaterial(PostStudyMaterialRequestDto dto ,String createStudyUserEmail,Integer studyNumber);
 
 
 

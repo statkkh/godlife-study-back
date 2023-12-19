@@ -17,15 +17,17 @@ import com.godlife_study.back.dto.response.studyService.DeleteStudyNoticeRespons
 
 import com.godlife_study.back.dto.request.studyService.PostStudyTodoListRequestDto;
 import com.godlife_study.back.dto.request.studyService.PatchStudyTodoListRequestDto;
-
+import com.godlife_study.back.dto.request.studyService.PostStudyMaterialRequestDto;
 import com.godlife_study.back.dto.response.studyService.GetStudyTodoListResponseDto;
 import com.godlife_study.back.dto.response.studyService.GetStudyUserListResponseDto;
 import com.godlife_study.back.dto.response.studyService.PostStudyTodoListResponseDto;
 import com.godlife_study.back.dto.response.studyService.PostStudyUserListResponseDto;
 import com.godlife_study.back.dto.response.studyService.PatchStudyTodoListResponseDto;
+import com.godlife_study.back.dto.response.studyService.PostStudyMaterialResponseDto;
 import com.godlife_study.back.dto.response.studyService.DeleteStudyTodoListResponseDto;
 import com.godlife_study.back.dto.response.studyService.GetStudyMaterialListResponseDto;
 import com.godlife_study.back.entity.StudyEntity;
+import com.godlife_study.back.entity.StudyMaterialEntity;
 import com.godlife_study.back.entity.StudyNoticeEntity;
 import com.godlife_study.back.entity.StudyTodoListEntity;
 import com.godlife_study.back.entity.StudyUserListEntity;
@@ -356,6 +358,30 @@ public class StudyServiceImplement implements StudyService {
         }
 
         return GetStudyMaterialListResponseDto.success(resultSets);
+    }
+
+    @Override
+    public ResponseEntity<? super PostStudyMaterialResponseDto> postMaterial(PostStudyMaterialRequestDto dto,String createStudyUserEmail, Integer studyNumber) {
+        
+        try {
+            boolean existedUser = userRepository.existsByUserEmail(createStudyUserEmail);
+            if(!existedUser ) return PostStudyMaterialResponseDto.notExistUser();
+
+            StudyEntity studyEntity = studyRepository.findByStudyNumber(studyNumber);
+            if( studyEntity == null) return PostStudyMaterialResponseDto.notExistStudy();
+
+            boolean equalCreater = studyEntity.getCreateStudyUserEmail().equals(createStudyUserEmail);
+            if(!equalCreater) return PostStudyMaterialResponseDto.noPermission();
+
+            StudyMaterialEntity studyMaterialEntity = new StudyMaterialEntity(dto,studyNumber);
+            studyMaterialRepository.save(studyMaterialEntity);            
+
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+
+        return PostStudyMaterialResponseDto.success();
     }
 
 
