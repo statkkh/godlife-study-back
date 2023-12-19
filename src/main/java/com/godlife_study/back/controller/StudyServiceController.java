@@ -24,12 +24,13 @@ import com.godlife_study.back.dto.response.studyService.DeleteStudyNoticeRespons
 
 import com.godlife_study.back.dto.request.studyService.PostStudyTodoListRequestDto;
 import com.godlife_study.back.dto.request.studyService.PatchStudyTodoListRequestDto;
-
+import com.godlife_study.back.dto.request.studyService.PostStudyMaterialRequestDto;
 import com.godlife_study.back.dto.response.studyService.GetStudyTodoListResponseDto;
 import com.godlife_study.back.dto.response.studyService.GetStudyUserListResponseDto;
 import com.godlife_study.back.dto.response.studyService.PostStudyTodoListResponseDto;
 import com.godlife_study.back.dto.response.studyService.PostStudyUserListResponseDto;
 import com.godlife_study.back.dto.response.studyService.PatchStudyTodoListResponseDto;
+import com.godlife_study.back.dto.response.studyService.PostStudyMaterialResponseDto;
 import com.godlife_study.back.dto.response.studyService.DeleteStudyTodoListResponseDto;
 import com.godlife_study.back.dto.response.studyService.GetStudyMaterialListResponseDto;
 import com.godlife_study.back.service.StudyService;
@@ -158,9 +159,25 @@ public class StudyServiceController {
         return response;
     }
 
-    
+    @PostMapping("{studyNumber}/material")
+    public ResponseEntity<? super PostStudyMaterialResponseDto> postMaterial(
+        @RequestBody @Valid PostStudyMaterialRequestDto requestBody,
+        @AuthenticationPrincipal String createStudyUserEmail,
+        @PathVariable("studyNumber") Integer studyNumber
+    ) {
+        ResponseEntity<? super PostStudyMaterialResponseDto> response = studyService.postMaterial(requestBody,createStudyUserEmail, studyNumber);
+        return response;
+    }    
+
+    // @DeleteMapping("/{studyNumber}/material/{studyMaterialNumber}")
+    // public ResponseEntity<? super DeleteStudyMaterialResponseDto> deleteMaterial(
+    //     @AuthenticationPrincipal String createStudyUserEmail,
+    //     @PathVariable("studyNumber") Integer studyNumber,
+    //     @PathVariable("studyMaterialNumber") Integer studyMaterialNumber
+    // ) {
+    //     ResponseEntity<? super DeleteStudyMaterialResponseDto> response = studyService.deleteMaterial(createStudyUserEmail, studyNumber, studyMaterialNumber);
+    //     return response;
+    // }
 
 
-
-    
 }
