@@ -17,6 +17,7 @@ import com.godlife_study.back.dto.request.studyService.PostStudyNoticeRequestDto
 import com.godlife_study.back.dto.request.studyService.PatchStudyNoticeRequestDto;
 
 import com.godlife_study.back.dto.response.studyService.GetStudyNoticeListResponseDto;
+import com.godlife_study.back.dto.response.studyService.GetStudyResponseDto;
 import com.godlife_study.back.dto.response.studyService.PostStudyNoticeResponseDto;
 import com.godlife_study.back.dto.response.studyService.PatchStudyNoticeResponseDto;
 import com.godlife_study.back.dto.response.studyService.DeleteStudyNoticeResponseDto;
@@ -42,6 +43,15 @@ import lombok.RequiredArgsConstructor;
 public class StudyServiceController {
     
     private final StudyService studyService;
+
+    @GetMapping("/service/{studyNumber}")
+    ResponseEntity<? super GetStudyResponseDto> getStudy(
+        @PathVariable("studyNumber") Integer studyNumber,
+        @AuthenticationPrincipal String userEmail) 
+    {
+        ResponseEntity<? super GetStudyResponseDto> response = studyService.getStudy(studyNumber, userEmail);
+        return response;
+    }    
 
     @GetMapping("/service/{studyNumber}/study-user-list")
     public ResponseEntity<? super GetStudyUserListResponseDto> getStudyUserList(
