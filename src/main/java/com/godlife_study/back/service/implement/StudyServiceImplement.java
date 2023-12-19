@@ -18,6 +18,7 @@ import com.godlife_study.back.dto.request.studyService.PostStudyTodoListRequestD
 import com.godlife_study.back.dto.request.studyService.PatchStudyTodoListRequestDto;
 
 import com.godlife_study.back.dto.response.studyService.GetStudyTodoListResponseDto;
+import com.godlife_study.back.dto.response.studyService.GetStudyUserListResponseDto;
 import com.godlife_study.back.dto.response.studyService.PostStudyTodoListResponseDto;
 import com.godlife_study.back.dto.response.studyService.PatchStudyTodoListResponseDto;
 import com.godlife_study.back.dto.response.studyService.DeleteStudyTodoListResponseDto;
@@ -31,9 +32,10 @@ import com.godlife_study.back.repository.UserRepository;
 import com.godlife_study.back.repository.StudyRepository;
 import com.godlife_study.back.repository.StudyNoticeRepository;
 import com.godlife_study.back.repository.StudyTodoListRepository;
-
+import com.godlife_study.back.repository.StudyUserListRepository;
 import com.godlife_study.back.repository.resultSet.StudyNoticeListResultSet;
 import com.godlife_study.back.repository.resultSet.StudyTodoListResultSet;
+import com.godlife_study.back.repository.resultSet.StudyUserListResultSet;
 import com.godlife_study.back.service.StudyService;
 
 import java.util.ArrayList;
@@ -46,6 +48,33 @@ public class StudyServiceImplement implements StudyService {
     private final UserRepository userRepository;
 
     private final StudyRepository studyRepository;
+    private final StudyUserListRepository studyUserListRepository;
+
+    @Override
+    public ResponseEntity<? super GetStudyUserListResponseDto> getStudyUserList(Integer studyNumber, String userEmail) {
+    
+        List<StudyUserListResultSet> studyUserListResultSets = new ArrayList<>();
+
+        try {
+            boolean existedStudy = studyRepository.existsByStudyNumber(studyNumber);
+            if (!existedStudy) return GetStudyUserListResponseDto.notExistStudy();
+            
+            boolean existedUser = userRepository.existsByUserEmail(userEmail);
+            if (!existedUser) return GetStudyUserListResponseDto.notExistUser();
+
+            boolean existedUserList = studyUserListRepository.existsByUserEmailAndStudyNumber(userEmail, studyNumber);
+            if (!existedUserList) return GetStudyUserListResponseDto.notExistUser();
+        
+            studyUserListResultSets = studyUserListRepository.findByStudyUserList(studyNumber);
+            
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+
+        return GetStudyUserListResponseDto.success(studyUserListResultSets);
+    }
+    
 
     private final StudyNoticeRepository studyNoticeRepository;
 
@@ -256,6 +285,7 @@ public class StudyServiceImplement implements StudyService {
 
         return DeleteStudyTodoListResponseDto.success();
     }
+
 
     
 
