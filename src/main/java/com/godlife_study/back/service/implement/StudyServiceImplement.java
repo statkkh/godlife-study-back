@@ -10,6 +10,7 @@ import com.godlife_study.back.dto.request.studyService.PatchStudyNoticeRequestDt
 import com.godlife_study.back.dto.request.studyService.PostStudyNoticeRequestDto;
 
 import com.godlife_study.back.dto.response.studyService.GetStudyNoticeListResponseDto;
+import com.godlife_study.back.dto.response.studyService.GetStudyResponseDto;
 import com.godlife_study.back.dto.response.studyService.PostStudyNoticeResponseDto;
 import com.godlife_study.back.dto.response.studyService.PatchStudyNoticeResponseDto;
 import com.godlife_study.back.dto.response.studyService.DeleteStudyNoticeResponseDto;
@@ -49,6 +50,30 @@ public class StudyServiceImplement implements StudyService {
     private final UserRepository userRepository;
 
     private final StudyRepository studyRepository;
+
+    @Override
+    public ResponseEntity<? super GetStudyResponseDto> getStudy(Integer studyNumber, String userEmail) {
+        
+        StudyEntity studyEntity = null;
+
+        try {
+            
+            boolean existedUser = userRepository.existsByUserEmail(userEmail);
+            if (!existedUser) return GetStudyResponseDto.notExistUser();
+
+            boolean existedStudy = studyRepository.existsByStudyNumber(studyNumber);
+            if (!existedStudy) return GetStudyResponseDto.notExistStudy();
+
+            studyEntity = studyRepository.findByStudyNumber(studyNumber);
+
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+        
+        return GetStudyResponseDto.success(studyEntity);
+    }
+
+
     private final StudyUserListRepository studyUserListRepository;
 
     @Override
@@ -306,6 +331,7 @@ public class StudyServiceImplement implements StudyService {
 
         return DeleteStudyTodoListResponseDto.success();
     }
+
 
 
 

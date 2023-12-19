@@ -6,6 +6,7 @@ import com.godlife_study.back.dto.request.studyService.PostStudyNoticeRequestDto
 import com.godlife_study.back.dto.request.studyService.PatchStudyNoticeRequestDto;
 
 import com.godlife_study.back.dto.response.studyService.GetStudyNoticeListResponseDto;
+import com.godlife_study.back.dto.response.studyService.GetStudyResponseDto;
 import com.godlife_study.back.dto.response.studyService.PostStudyNoticeResponseDto;
 import com.godlife_study.back.dto.response.studyService.PatchStudyNoticeResponseDto;
 import com.godlife_study.back.dto.response.studyService.DeleteStudyNoticeResponseDto;
@@ -21,6 +22,7 @@ import com.godlife_study.back.dto.response.studyService.PatchStudyTodoListRespon
 import com.godlife_study.back.dto.response.studyService.DeleteStudyTodoListResponseDto;
 
 public interface StudyService {
+    ResponseEntity<? super GetStudyResponseDto> getStudy(Integer studyNumber,String userEmail);
     ResponseEntity<? super GetStudyUserListResponseDto> getStudyUserList(Integer studyNumber, String userEmail);
     ResponseEntity<? super PostStudyUserListResponseDto> postStudyUserList(String userEmail, Integer studyNumber, String studyGrade);
     ResponseEntity<? super GetStudyNoticeListResponseDto> getNoticeList(String userEmail,Integer studyNumber);
