@@ -25,6 +25,7 @@ import com.godlife_study.back.dto.request.studyService.PostStudyTodoListRequestD
 import com.godlife_study.back.dto.request.studyService.PatchStudyTodoListRequestDto;
 
 import com.godlife_study.back.dto.response.studyService.GetStudyTodoListResponseDto;
+import com.godlife_study.back.dto.response.studyService.GetStudyUserListResponseDto;
 import com.godlife_study.back.dto.response.studyService.PostStudyTodoListResponseDto;
 import com.godlife_study.back.dto.response.studyService.PatchStudyTodoListResponseDto;
 import com.godlife_study.back.dto.response.studyService.DeleteStudyTodoListResponseDto;
@@ -40,6 +41,14 @@ import lombok.RequiredArgsConstructor;
 public class StudyServiceController {
     
     private final StudyService studyService;
+
+    @GetMapping("/service/{studyNumber}/study-user-list")
+    public ResponseEntity<? super GetStudyUserListResponseDto> getStudyUserList(
+        @PathVariable("studyNumber") Integer studyNumber,
+        @AuthenticationPrincipal String userEmail) {
+        ResponseEntity<? super GetStudyUserListResponseDto> response = studyService.getStudyUserList(studyNumber,userEmail);
+        return response;
+    }
 
     @GetMapping("/{studyNumber}/notice")
     public ResponseEntity<? super GetStudyNoticeListResponseDto> getNoticeList(
