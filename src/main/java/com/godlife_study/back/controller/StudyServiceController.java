@@ -27,6 +27,7 @@ import com.godlife_study.back.dto.request.studyService.PatchStudyTodoListRequest
 import com.godlife_study.back.dto.response.studyService.GetStudyTodoListResponseDto;
 import com.godlife_study.back.dto.response.studyService.GetStudyUserListResponseDto;
 import com.godlife_study.back.dto.response.studyService.PostStudyTodoListResponseDto;
+import com.godlife_study.back.dto.response.studyService.PostStudyUserListResponseDto;
 import com.godlife_study.back.dto.response.studyService.PatchStudyTodoListResponseDto;
 import com.godlife_study.back.dto.response.studyService.DeleteStudyTodoListResponseDto;
 
@@ -47,6 +48,16 @@ public class StudyServiceController {
         @PathVariable("studyNumber") Integer studyNumber,
         @AuthenticationPrincipal String userEmail) {
         ResponseEntity<? super GetStudyUserListResponseDto> response = studyService.getStudyUserList(studyNumber,userEmail);
+        return response;
+    }
+
+    @PostMapping("/service/{studyNumber}/study-user-list/${studyGrade}")
+    public ResponseEntity<? super PostStudyUserListResponseDto> postStudyUserList(
+        @AuthenticationPrincipal String createStudyUserEmail,
+        @PathVariable("studyNumber") Integer studyNumber,
+        @PathVariable("studyGrade") String studyGrade
+    ){
+        ResponseEntity<? super PostStudyUserListResponseDto> response = studyService.postStudyUserList(createStudyUserEmail,studyNumber,studyGrade);
         return response;
     }
 
