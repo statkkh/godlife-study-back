@@ -66,8 +66,9 @@ public class StudyServiceImplement implements StudyService {
 
             studyEntity = studyRepository.findByStudyNumber(studyNumber);
 
-        } catch (Exception e) {
-            // TODO: handle exception
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.databaseError();
         }
         
         return GetStudyResponseDto.success(studyEntity);
