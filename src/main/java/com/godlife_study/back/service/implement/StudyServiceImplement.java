@@ -13,6 +13,7 @@ import com.godlife_study.back.dto.response.studyService.GetStudyNoticeListRespon
 import com.godlife_study.back.dto.response.studyService.GetStudyResponseDto;
 import com.godlife_study.back.dto.response.studyService.PostStudyNoticeResponseDto;
 import com.godlife_study.back.dto.response.studyService.PatchStudyNoticeResponseDto;
+import com.godlife_study.back.dto.response.studyService.DeleteStudyMaterialResponseDto;
 import com.godlife_study.back.dto.response.studyService.DeleteStudyNoticeResponseDto;
 
 import com.godlife_study.back.dto.request.studyService.PostStudyTodoListRequestDto;
@@ -382,6 +383,31 @@ public class StudyServiceImplement implements StudyService {
         }
 
         return PostStudyMaterialResponseDto.success();
+    }
+
+    @Override
+    public ResponseEntity<? super DeleteStudyMaterialResponseDto> deleteMaterial(String createStudyUserEmail,Integer studyNumber, Integer studyMaterialNumber) {
+        
+        try {
+
+            boolean existedUser = userRepository.existsByUserEmail(createStudyUserEmail);           
+            if(!existedUser) return DeleteStudyMaterialResponseDto.notExistUser();
+    
+            StudyEntity studyEntity = studyRepository.findByStudyNumber(studyNumber);
+            if( studyEntity == null)  return DeleteStudyMaterialResponseDto.notExistStudy();
+    
+            boolean equalCreater = studyEntity.getCreateStudyUserEmail().equals(createStudyUserEmail);
+            if(!equalCreater) return DeleteStudyMaterialResponseDto.noPermission();  
+    
+            StudyMaterialEntity studyMaterialEntity = studyMaterialRepository.findByStudyMaterialNumber(studyMaterialNumber);
+            studyMaterialRepository.delete(studyMaterialEntity);            
+
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+
+        return DeleteStudyMaterialResponseDto.success();
     }
 
 

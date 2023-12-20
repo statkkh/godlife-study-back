@@ -9,6 +9,7 @@ import com.godlife_study.back.dto.response.studyService.GetStudyNoticeListRespon
 import com.godlife_study.back.dto.response.studyService.GetStudyResponseDto;
 import com.godlife_study.back.dto.response.studyService.PostStudyNoticeResponseDto;
 import com.godlife_study.back.dto.response.studyService.PatchStudyNoticeResponseDto;
+import com.godlife_study.back.dto.response.studyService.DeleteStudyMaterialResponseDto;
 import com.godlife_study.back.dto.response.studyService.DeleteStudyNoticeResponseDto;
 
 import com.godlife_study.back.dto.request.studyService.PostStudyTodoListRequestDto;
@@ -39,7 +40,7 @@ public interface StudyService {
 
     ResponseEntity<? super GetStudyMaterialListResponseDto> getMaterialList(String userEmail,Integer studyNumber);
     ResponseEntity<? super PostStudyMaterialResponseDto> postMaterial(PostStudyMaterialRequestDto dto ,String createStudyUserEmail,Integer studyNumber);
-
+    ResponseEntity<? super DeleteStudyMaterialResponseDto> deleteMaterial(String createStudyUserEmail,Integer studyNumber,Integer studyMaterialNumber);
 
 
 
