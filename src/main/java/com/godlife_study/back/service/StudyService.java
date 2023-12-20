@@ -3,6 +3,7 @@ package com.godlife_study.back.service;
 import org.springframework.http.ResponseEntity;
 
 import com.godlife_study.back.dto.request.studyService.PostStudyNoticeRequestDto;
+import com.godlife_study.back.dto.request.studyService.PatchStudyMaterialCommentRequestDto;
 import com.godlife_study.back.dto.request.studyService.PatchStudyNoticeRequestDto;
 
 import com.godlife_study.back.dto.response.studyService.GetStudyNoticeListResponseDto;
@@ -18,6 +19,7 @@ import com.godlife_study.back.dto.request.studyService.PostStudyMaterialCommentR
 import com.godlife_study.back.dto.request.studyService.PostStudyMaterialRequestDto;
 import com.godlife_study.back.dto.response.studyService.GetStudyTodoListResponseDto;
 import com.godlife_study.back.dto.response.studyService.GetStudyUserListResponseDto;
+import com.godlife_study.back.dto.response.studyService.PatchStudyMaterialCommentResponseDto;
 import com.godlife_study.back.dto.response.studyService.PostStudyTodoListResponseDto;
 import com.godlife_study.back.dto.response.studyService.PostStudyUserListResponseDto;
 import com.godlife_study.back.dto.response.studyService.PatchStudyTodoListResponseDto;
@@ -46,7 +48,7 @@ public interface StudyService {
 
     
     ResponseEntity<? super PostStudyMaterialCommentResponseDto> postMaterialComment(PostStudyMaterialCommentRequestDto dto, String userEmail,Integer studyNumber,Integer studyMaterialNumber);
-    
+    ResponseEntity<? super PatchStudyMaterialCommentResponseDto> patchMaterialComment(PatchStudyMaterialCommentRequestDto dto, String userEmail, Integer studyNumber, Integer studyMaterialNumber);    
 
 
 }

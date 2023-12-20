@@ -5,7 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.godlife_study.back.dto.response.ResponseDto;
-
+import com.godlife_study.back.dto.request.studyService.PatchStudyMaterialCommentRequestDto;
 import com.godlife_study.back.dto.request.studyService.PatchStudyNoticeRequestDto;
 import com.godlife_study.back.dto.request.studyService.PostStudyNoticeRequestDto;
 
@@ -22,6 +22,7 @@ import com.godlife_study.back.dto.request.studyService.PostStudyMaterialCommentR
 import com.godlife_study.back.dto.request.studyService.PostStudyMaterialRequestDto;
 import com.godlife_study.back.dto.response.studyService.GetStudyTodoListResponseDto;
 import com.godlife_study.back.dto.response.studyService.GetStudyUserListResponseDto;
+import com.godlife_study.back.dto.response.studyService.PatchStudyMaterialCommentResponseDto;
 import com.godlife_study.back.dto.response.studyService.PostStudyTodoListResponseDto;
 import com.godlife_study.back.dto.response.studyService.PostStudyUserListResponseDto;
 import com.godlife_study.back.dto.response.studyService.PatchStudyTodoListResponseDto;
@@ -35,6 +36,7 @@ import com.godlife_study.back.entity.StudyMaterialEntity;
 import com.godlife_study.back.entity.StudyNoticeEntity;
 import com.godlife_study.back.entity.StudyTodoListEntity;
 import com.godlife_study.back.entity.StudyUserListEntity;
+import com.godlife_study.back.entity.UserEntity;
 import com.godlife_study.back.repository.UserRepository;
 import com.godlife_study.back.repository.StudyRepository;
 import com.godlife_study.back.repository.StudyMaterialCommentRepository;
@@ -439,6 +441,36 @@ public class StudyServiceImplement implements StudyService {
         }
 
         return PostStudyMaterialCommentResponseDto.success();
+    }
+
+    @Override
+    public ResponseEntity<? super PatchStudyMaterialCommentResponseDto> patchMaterialComment(PatchStudyMaterialCommentRequestDto dto, String userEmail, Integer studyNumber,Integer studyMaterialNumber) {
+        
+        try {
+            
+        UserEntity  userEntity = userRepository.findByUserEmail(userEmail);
+        if(userEntity == null) return PatchStudyMaterialCommentResponseDto.notExistUser();
+
+        StudyEntity studyEntity = studyRepository.findByStudyNumber(studyNumber);
+        if(studyEntity == null) return PatchStudyMaterialCommentResponseDto.notExistUser(); 
+            
+        StudyMaterialEntity  studyMaterialEntity = studyMaterialRepository.findByStudyMaterialNumber(studyMaterialNumber);            
+        if(studyMaterialEntity == null) return PatchStudyMaterialCommentResponseDto.notExistMaterial();        
+
+        StudyMaterialCommentEntity studyMaterialCommentEntity = studyMaterialCommentRepository.findByStudyMaterialCommentNumber(dto.getStudyMaterialCommentNumber());
+        if(studyMaterialCommentEntity == null) return PatchStudyMaterialCommentResponseDto.notExistMaterialCommment();
+
+        boolean equalWriter = studyMaterialCommentEntity.getUserEmail().equals(userEmail);
+        if(!equalWriter) return PatchStudyMaterialCommentResponseDto.noPermission();
+        
+        studyMaterialCommentEntity.patchMaterialComment(dto);
+        studyMaterialCommentRepository.save(studyMaterialCommentEntity);
+
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.databaseError(); 
+        }
+        return PatchStudyMaterialCommentResponseDto.success();
     }
     
     
