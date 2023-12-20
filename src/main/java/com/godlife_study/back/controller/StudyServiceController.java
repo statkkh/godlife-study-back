@@ -13,27 +13,36 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.godlife_study.back.dto.response.studyService.GetStudyResponseDto;
+
+import com.godlife_study.back.dto.response.studyService.GetStudyUserListResponseDto;
+import com.godlife_study.back.dto.response.studyService.PostStudyUserListResponseDto;
+
 import com.godlife_study.back.dto.request.studyService.PostStudyNoticeRequestDto;
 import com.godlife_study.back.dto.request.studyService.PatchStudyNoticeRequestDto;
 
 import com.godlife_study.back.dto.response.studyService.GetStudyNoticeListResponseDto;
-import com.godlife_study.back.dto.response.studyService.GetStudyResponseDto;
 import com.godlife_study.back.dto.response.studyService.PostStudyNoticeResponseDto;
 import com.godlife_study.back.dto.response.studyService.PatchStudyNoticeResponseDto;
-import com.godlife_study.back.dto.response.studyService.DeleteStudyMaterialResponseDto;
 import com.godlife_study.back.dto.response.studyService.DeleteStudyNoticeResponseDto;
 
 import com.godlife_study.back.dto.request.studyService.PostStudyTodoListRequestDto;
 import com.godlife_study.back.dto.request.studyService.PatchStudyTodoListRequestDto;
-import com.godlife_study.back.dto.request.studyService.PostStudyMaterialRequestDto;
+
 import com.godlife_study.back.dto.response.studyService.GetStudyTodoListResponseDto;
-import com.godlife_study.back.dto.response.studyService.GetStudyUserListResponseDto;
 import com.godlife_study.back.dto.response.studyService.PostStudyTodoListResponseDto;
-import com.godlife_study.back.dto.response.studyService.PostStudyUserListResponseDto;
 import com.godlife_study.back.dto.response.studyService.PatchStudyTodoListResponseDto;
-import com.godlife_study.back.dto.response.studyService.PostStudyMaterialResponseDto;
 import com.godlife_study.back.dto.response.studyService.DeleteStudyTodoListResponseDto;
+
+import com.godlife_study.back.dto.request.studyService.PostStudyMaterialRequestDto;
+
+import com.godlife_study.back.dto.response.studyService.PostStudyMaterialResponseDto;
+import com.godlife_study.back.dto.response.studyService.DeleteStudyMaterialResponseDto;
 import com.godlife_study.back.dto.response.studyService.GetStudyMaterialListResponseDto;
+
+import com.godlife_study.back.dto.request.studyService.PostStudyMaterialCommentRequestDto;
+import com.godlife_study.back.dto.response.studyService.PostStudyMaterialCommentResponseDto;
+
 import com.godlife_study.back.service.StudyService;
 
 import lombok.RequiredArgsConstructor;
@@ -190,4 +199,16 @@ public class StudyServiceController {
     //     ResponseEntity<? super GetStudyMaterialCommentListResponseDto> response = studyService.getMaterialCommentList(userEmail, studyNumber, studyMaterialNumber);
     //     return response;
     // }
+
+
+    @PostMapping("/{studyNumber}/{studyMaterialNumber}/material-comment")
+    public ResponseEntity<? super PostStudyMaterialCommentResponseDto> postMaterialComment(
+        @RequestBody @Valid PostStudyMaterialCommentRequestDto requestBody,
+        @AuthenticationPrincipal String createStudyUserEmail,
+        @PathVariable("studyNumber") Integer studyNumber,
+        @PathVariable("studyMaterialNumber") Integer studyMaterialNumber
+    ){
+        ResponseEntity<? super PostStudyMaterialCommentResponseDto> response = studyService.postMaterialComment(requestBody,createStudyUserEmail, studyNumber, studyMaterialNumber);
+        return response;
+    }
 }
