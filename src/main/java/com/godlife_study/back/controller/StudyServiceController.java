@@ -41,7 +41,10 @@ import com.godlife_study.back.dto.response.studyService.DeleteStudyMaterialRespo
 import com.godlife_study.back.dto.response.studyService.GetStudyMaterialListResponseDto;
 
 import com.godlife_study.back.dto.request.studyService.PostStudyMaterialCommentRequestDto;
+import com.godlife_study.back.dto.request.studyService.PatchStudyMaterialCommentRequestDto;
+
 import com.godlife_study.back.dto.response.studyService.PostStudyMaterialCommentResponseDto;
+import com.godlife_study.back.dto.response.studyService.PatchStudyMaterialCommentResponseDto;
 
 import com.godlife_study.back.service.StudyService;
 
@@ -211,4 +214,18 @@ public class StudyServiceController {
         ResponseEntity<? super PostStudyMaterialCommentResponseDto> response = studyService.postMaterialComment(requestBody,createStudyUserEmail, studyNumber, studyMaterialNumber);
         return response;
     }
+
+    @PatchMapping("/{studyNumber}/{studyMaterialNumber}/material-comment")
+    public ResponseEntity<? super PatchStudyMaterialCommentResponseDto> patchMaterialComment(
+        @RequestBody @Valid PatchStudyMaterialCommentRequestDto requestBody,
+        @AuthenticationPrincipal String createStudyUserEmail,
+        @PathVariable("studyNumber") Integer studyNumber,
+        @PathVariable("studyMaterialNumber") Integer studyMaterialNumber
+    ){
+        ResponseEntity<? super PatchStudyMaterialCommentResponseDto> response = studyService.patchMaterialComment(requestBody,createStudyUserEmail, studyNumber, studyMaterialNumber);
+        return response;
+    }
+
+
+
 }
