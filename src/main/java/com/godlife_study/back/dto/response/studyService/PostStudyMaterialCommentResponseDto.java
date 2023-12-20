@@ -32,5 +32,10 @@ public class PostStudyMaterialCommentResponseDto extends ResponseDto{
         ResponseDto result = new ResponseDto(ResponseCode.NOT_EXIST_STUDY, ResponseMessage.NOT_EXIST_STUDY);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result);
     }
+
+    public static ResponseEntity<ResponseDto> notExistMaterial(){
+        ResponseDto result = new ResponseDto(ResponseCode.NOT_EXIST_MATERIAL, ResponseMessage.NOT_EXIST_MATERIAL);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result); 
+    }       
     
 }
