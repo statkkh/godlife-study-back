@@ -20,6 +20,7 @@ import com.godlife_study.back.dto.response.studyService.GetStudyNoticeListRespon
 import com.godlife_study.back.dto.response.studyService.GetStudyResponseDto;
 import com.godlife_study.back.dto.response.studyService.PostStudyNoticeResponseDto;
 import com.godlife_study.back.dto.response.studyService.PatchStudyNoticeResponseDto;
+import com.godlife_study.back.dto.response.studyService.DeleteStudyMaterialResponseDto;
 import com.godlife_study.back.dto.response.studyService.DeleteStudyNoticeResponseDto;
 
 import com.godlife_study.back.dto.request.studyService.PostStudyTodoListRequestDto;
@@ -169,15 +170,24 @@ public class StudyServiceController {
         return response;
     }    
 
-    // @DeleteMapping("/{studyNumber}/material/{studyMaterialNumber}")
-    // public ResponseEntity<? super DeleteStudyMaterialResponseDto> deleteMaterial(
-    //     @AuthenticationPrincipal String createStudyUserEmail,
+    @DeleteMapping("/{studyNumber}/material/{studyMaterialNumber}")
+    public ResponseEntity<? super DeleteStudyMaterialResponseDto> deleteMaterial(
+        @AuthenticationPrincipal String createStudyUserEmail,
+        @PathVariable("studyNumber") Integer studyNumber,
+        @PathVariable("studyMaterialNumber") Integer studyMaterialNumber
+    ) {
+        ResponseEntity<? super DeleteStudyMaterialResponseDto> response = studyService.deleteMaterial(createStudyUserEmail, studyNumber, studyMaterialNumber);
+        return response;
+    }
+
+
+    // @GetMapping("/{studyNumber}/{studyMaterialNumber}/material-comment")
+    // public ResponseEntity<? super GetStudyMaterialCommentListResponseDto> getMaterialComment(
+    //     @AuthenticationPrincipal String userEmail,
     //     @PathVariable("studyNumber") Integer studyNumber,
     //     @PathVariable("studyMaterialNumber") Integer studyMaterialNumber
     // ) {
-    //     ResponseEntity<? super DeleteStudyMaterialResponseDto> response = studyService.deleteMaterial(createStudyUserEmail, studyNumber, studyMaterialNumber);
+    //     ResponseEntity<? super GetStudyMaterialCommentListResponseDto> response = studyService.getMaterialCommentList(userEmail, studyNumber, studyMaterialNumber);
     //     return response;
     // }
-
-
 }
