@@ -37,7 +37,7 @@ public class PatchStudyMaterialCommentResponseDto extends ResponseDto{
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result); 
     }
 
-    public static  ResponseEntity<ResponseDto> noPermision(){
+    public static  ResponseEntity<ResponseDto> noPermission(){
         ResponseDto result = new ResponseDto(ResponseCode.NO_PERMISSION, ResponseMessage.NO_PERMISSION);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result);
     }    
