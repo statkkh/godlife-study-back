@@ -18,22 +18,26 @@ import com.godlife_study.back.dto.response.studyService.DeleteStudyNoticeRespons
 
 import com.godlife_study.back.dto.request.studyService.PostStudyTodoListRequestDto;
 import com.godlife_study.back.dto.request.studyService.PatchStudyTodoListRequestDto;
+import com.godlife_study.back.dto.request.studyService.PostStudyMaterialCommentRequestDto;
 import com.godlife_study.back.dto.request.studyService.PostStudyMaterialRequestDto;
 import com.godlife_study.back.dto.response.studyService.GetStudyTodoListResponseDto;
 import com.godlife_study.back.dto.response.studyService.GetStudyUserListResponseDto;
 import com.godlife_study.back.dto.response.studyService.PostStudyTodoListResponseDto;
 import com.godlife_study.back.dto.response.studyService.PostStudyUserListResponseDto;
 import com.godlife_study.back.dto.response.studyService.PatchStudyTodoListResponseDto;
+import com.godlife_study.back.dto.response.studyService.PostStudyMaterialCommentResponseDto;
 import com.godlife_study.back.dto.response.studyService.PostStudyMaterialResponseDto;
 import com.godlife_study.back.dto.response.studyService.DeleteStudyTodoListResponseDto;
 import com.godlife_study.back.dto.response.studyService.GetStudyMaterialListResponseDto;
 import com.godlife_study.back.entity.StudyEntity;
+import com.godlife_study.back.entity.StudyMaterialCommentEntity;
 import com.godlife_study.back.entity.StudyMaterialEntity;
 import com.godlife_study.back.entity.StudyNoticeEntity;
 import com.godlife_study.back.entity.StudyTodoListEntity;
 import com.godlife_study.back.entity.StudyUserListEntity;
 import com.godlife_study.back.repository.UserRepository;
 import com.godlife_study.back.repository.StudyRepository;
+import com.godlife_study.back.repository.StudyMaterialCommentRepository;
 import com.godlife_study.back.repository.StudyMaterialRepository;
 import com.godlife_study.back.repository.StudyNoticeRepository;
 import com.godlife_study.back.repository.StudyTodoListRepository;
@@ -410,9 +414,34 @@ public class StudyServiceImplement implements StudyService {
         return DeleteStudyMaterialResponseDto.success();
     }
 
+    private final StudyMaterialCommentRepository studyMaterialCommentRepository;
 
+    @Override
+    public ResponseEntity<? super PostStudyMaterialCommentResponseDto> postMaterialComment(PostStudyMaterialCommentRequestDto dto, String userEmail, Integer studyNumber,Integer studyMaterialNumber) {
+        
+        try {
+            boolean existedUser = userRepository.existsByUserEmail(userEmail);
+            if(!existedUser ) return PostStudyMaterialCommentResponseDto.notExistUser();
 
+            StudyEntity studyEntity = studyRepository.findByStudyNumber(studyNumber);
+            if( studyEntity == null) return PostStudyMaterialCommentResponseDto.notExistStudy();
 
+            StudyMaterialEntity studyMaterialEntity = studyMaterialRepository.findByStudyMaterialNumber(studyMaterialNumber);
+            if( studyMaterialEntity == null) return PostStudyMaterialCommentResponseDto.notExistMaterial();
+
+            StudyMaterialCommentEntity studyMaterialCommentEntity = new StudyMaterialCommentEntity(dto,userEmail, studyMaterialNumber);
+            studyMaterialCommentRepository.save(studyMaterialCommentEntity);
+            
+            
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.databaseError(); 
+        }
+
+        return PostStudyMaterialCommentResponseDto.success();
+    }
+    
+    
 
     
 
