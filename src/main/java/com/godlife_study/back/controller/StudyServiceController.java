@@ -33,7 +33,6 @@ import com.godlife_study.back.dto.response.studyService.GetStudyTodoListResponse
 import com.godlife_study.back.dto.response.studyService.PostStudyTodoListResponseDto;
 import com.godlife_study.back.dto.response.studyService.PatchStudyTodoListResponseDto;
 import com.godlife_study.back.dto.response.studyService.DeleteStudyTodoListResponseDto;
-
 import com.godlife_study.back.dto.request.studyService.PostStudyMaterialRequestDto;
 
 import com.godlife_study.back.dto.response.studyService.PostStudyMaterialResponseDto;
@@ -43,6 +42,7 @@ import com.godlife_study.back.dto.response.studyService.GetStudyMaterialListResp
 import com.godlife_study.back.dto.request.studyService.PostStudyMaterialCommentRequestDto;
 import com.godlife_study.back.dto.request.studyService.PatchStudyMaterialCommentRequestDto;
 
+import com.godlife_study.back.dto.response.studyService.GetStudyMaterialCommentListResponseDto;
 import com.godlife_study.back.dto.response.studyService.PostStudyMaterialCommentResponseDto;
 import com.godlife_study.back.dto.response.studyService.PatchStudyMaterialCommentResponseDto;
 
@@ -193,15 +193,15 @@ public class StudyServiceController {
     }
 
 
-    // @GetMapping("/{studyNumber}/{studyMaterialNumber}/material-comment")
-    // public ResponseEntity<? super GetStudyMaterialCommentListResponseDto> getMaterialComment(
-    //     @AuthenticationPrincipal String userEmail,
-    //     @PathVariable("studyNumber") Integer studyNumber,
-    //     @PathVariable("studyMaterialNumber") Integer studyMaterialNumber
-    // ) {
-    //     ResponseEntity<? super GetStudyMaterialCommentListResponseDto> response = studyService.getMaterialCommentList(userEmail, studyNumber, studyMaterialNumber);
-    //     return response;
-    // }
+    @GetMapping("/{studyNumber}/{studyMaterialNumber}/material-comment")
+    public ResponseEntity<? super GetStudyMaterialCommentListResponseDto> getMaterialComment(
+        @AuthenticationPrincipal String userEmail,
+        @PathVariable("studyNumber") Integer studyNumber,
+        @PathVariable("studyMaterialNumber") Integer studyMaterialNumber
+    ) {
+        ResponseEntity<? super GetStudyMaterialCommentListResponseDto> response = studyService.getMaterialCommentList(userEmail, studyNumber, studyMaterialNumber);
+        return response;
+    }
 
 
     @PostMapping("/{studyNumber}/{studyMaterialNumber}/material-comment")
