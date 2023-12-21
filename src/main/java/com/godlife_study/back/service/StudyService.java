@@ -22,7 +22,6 @@ import com.godlife_study.back.dto.response.studyService.GetStudyTodoListResponse
 import com.godlife_study.back.dto.response.studyService.PostStudyTodoListResponseDto;
 import com.godlife_study.back.dto.response.studyService.PatchStudyTodoListResponseDto;
 import com.godlife_study.back.dto.response.studyService.DeleteStudyTodoListResponseDto;
-import com.godlife_study.back.dto.response.studyService.GetStudyMaterialCommentListResponseDto;
 import com.godlife_study.back.dto.request.studyService.PostStudyMaterialRequestDto;
 
 import com.godlife_study.back.dto.response.studyService.GetStudyMaterialListResponseDto;
@@ -32,9 +31,10 @@ import com.godlife_study.back.dto.response.studyService.PostStudyMaterialRespons
 import com.godlife_study.back.dto.request.studyService.PostStudyMaterialCommentRequestDto;
 import com.godlife_study.back.dto.request.studyService.PatchStudyMaterialCommentRequestDto;
 
-
+import com.godlife_study.back.dto.response.studyService.GetStudyMaterialCommentListResponseDto;
 import com.godlife_study.back.dto.response.studyService.PostStudyMaterialCommentResponseDto;
 import com.godlife_study.back.dto.response.studyService.PatchStudyMaterialCommentResponseDto;
+import com.godlife_study.back.dto.response.studyService.DeleteStudyMaterialCommentResponseDto;
 
 public interface StudyService {
     ResponseEntity<? super GetStudyResponseDto> getStudy(Integer studyNumber,String userEmail);
@@ -57,6 +57,6 @@ public interface StudyService {
     ResponseEntity<? super GetStudyMaterialCommentListResponseDto> getMaterialCommentList(String userEmail,Integer studyNumber,Integer studyMaterialNumber);    
     ResponseEntity<? super PostStudyMaterialCommentResponseDto> postMaterialComment(PostStudyMaterialCommentRequestDto dto, String userEmail,Integer studyNumber,Integer studyMaterialNumber);
     ResponseEntity<? super PatchStudyMaterialCommentResponseDto> patchMaterialComment(PatchStudyMaterialCommentRequestDto dto, String userEmail, Integer studyNumber, Integer studyMaterialNumber);    
-
+    ResponseEntity<? super DeleteStudyMaterialCommentResponseDto> deleteMaterialComment(String createStudyUserEmail,Integer studyNumber,Integer studyMaterialNumber,Integer studyMaterialCommentNumber);
 
 }
