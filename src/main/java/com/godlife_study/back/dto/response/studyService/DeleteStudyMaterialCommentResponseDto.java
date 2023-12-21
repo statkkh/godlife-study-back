@@ -37,7 +37,7 @@ public class DeleteStudyMaterialCommentResponseDto extends ResponseDto{
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result); 
     }
 
-    public static ResponseEntity<ResponseDto> notExistMaterialCommment() {
+    public static ResponseEntity<ResponseDto> notExistMaterialComment() {
         ResponseDto result = new ResponseDto(ResponseCode.NOT_EXIST_MATERIAL_COMMENT, ResponseMessage.NOT_EXIST_MATERIAL_COMMENT);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result);
     }
