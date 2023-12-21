@@ -33,6 +33,7 @@ import com.godlife_study.back.dto.request.studyService.PostStudyMaterialRequestD
 
 import com.godlife_study.back.dto.response.studyService.GetStudyMaterialListResponseDto;
 import com.godlife_study.back.dto.response.studyService.PostStudyMaterialResponseDto;
+import com.godlife_study.back.dto.response.studyService.DeleteStudyMaterialCommentResponseDto;
 import com.godlife_study.back.dto.response.studyService.DeleteStudyMaterialResponseDto;
 
 import com.godlife_study.back.dto.request.studyService.PostStudyMaterialCommentRequestDto;
@@ -435,6 +436,31 @@ public class StudyServiceImplement implements StudyService {
     private final StudyMaterialCommentRepository studyMaterialCommentRepository;
 
     @Override
+    public ResponseEntity<? super GetStudyMaterialCommentListResponseDto> getMaterialCommentList(String userEmail,Integer studyNumber, Integer studyMaterialNumber) {
+        
+        List<StudyMaterialCommentListResultSet> resultSets = new ArrayList<>();
+
+        try {
+
+            boolean existedUser = userRepository.existsByUserEmail(userEmail);
+            if(!existedUser) return  GetStudyMaterialCommentListResponseDto.notExistUser();
+
+            StudyEntity studyEntity = studyRepository.findByStudyNumber(studyNumber);
+            if( studyEntity == null) return GetStudyMaterialCommentListResponseDto.notExistStudy();
+
+            StudyMaterialEntity  studyMaterialEntity = studyMaterialRepository.findByStudyMaterialNumber(studyMaterialNumber);
+            if(studyMaterialEntity == null) return GetStudyMaterialCommentListResponseDto.notExistMaterial();
+            
+            resultSets = studyMaterialCommentRepository.findByMaterialCommentList(studyMaterialNumber);            
+            
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.databaseError(); 
+        }
+
+        return GetStudyMaterialCommentListResponseDto.success(resultSets);
+    }
+    @Override
     public ResponseEntity<? super PostStudyMaterialCommentResponseDto> postMaterialComment(PostStudyMaterialCommentRequestDto dto, String userEmail, Integer studyNumber,Integer studyMaterialNumber) {
         
         try {
@@ -490,30 +516,34 @@ public class StudyServiceImplement implements StudyService {
     }
 
     @Override
-    public ResponseEntity<? super GetStudyMaterialCommentListResponseDto> getMaterialCommentList(String userEmail,Integer studyNumber, Integer studyMaterialNumber) {
+    public ResponseEntity<? super DeleteStudyMaterialCommentResponseDto> deleteMaterialComment(String createStudyUserEmail,Integer studyNumber, Integer studyMaterialNumber, Integer studyMaterialCommentNumber) {
         
-        List<StudyMaterialCommentListResultSet> resultSets = new ArrayList<>();
-
         try {
 
-            boolean existedUser = userRepository.existsByUserEmail(userEmail);
-            if(!existedUser) return  GetStudyMaterialCommentListResponseDto.notExistUser();
+            boolean existedUser = userRepository.existsByUserEmail(createStudyUserEmail);
+            if(!existedUser) return  DeleteStudyMaterialCommentResponseDto.notExistUser();
 
             StudyEntity studyEntity = studyRepository.findByStudyNumber(studyNumber);
-            if( studyEntity == null) return GetStudyMaterialCommentListResponseDto.notExistStudy();
+            if( studyEntity == null) return DeleteStudyMaterialCommentResponseDto.notExistStudy();
 
             StudyMaterialEntity  studyMaterialEntity = studyMaterialRepository.findByStudyMaterialNumber(studyMaterialNumber);
-            if(studyMaterialEntity == null) return GetStudyMaterialCommentListResponseDto.notExistMaterial();
+            if(studyMaterialEntity == null) return DeleteStudyMaterialCommentResponseDto.notExistMaterial();
+
+            StudyMaterialCommentEntity studyMaterialCommentEntity = studyMaterialCommentRepository.findByStudyMaterialCommentNumber(studyMaterialCommentNumber);
+            if(studyMaterialCommentEntity == null) return DeleteStudyMaterialCommentResponseDto.notExistMaterialComment();
+
+            boolean equalCreater = studyEntity.getCreateStudyUserEmail().equals(createStudyUserEmail);
+            if(!equalCreater) return DeleteStudyMaterialResponseDto.noPermission();        
             
-            resultSets = studyMaterialCommentRepository.findByMaterialCommentList(studyMaterialNumber);            
-            
+            studyMaterialCommentRepository.delete(studyMaterialCommentEntity);
+
         } catch (Exception exception) {
             exception.printStackTrace();
             return ResponseDto.databaseError(); 
         }
-
-        return GetStudyMaterialCommentListResponseDto.success(resultSets);
+        return DeleteStudyMaterialCommentResponseDto.success();
     }
+
     
     
 
