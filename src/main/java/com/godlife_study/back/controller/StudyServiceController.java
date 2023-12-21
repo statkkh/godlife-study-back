@@ -36,6 +36,7 @@ import com.godlife_study.back.dto.response.studyService.DeleteStudyTodoListRespo
 import com.godlife_study.back.dto.request.studyService.PostStudyMaterialRequestDto;
 
 import com.godlife_study.back.dto.response.studyService.PostStudyMaterialResponseDto;
+import com.godlife_study.back.dto.response.studyService.DeleteStudyMaterialCommentResponseDto;
 import com.godlife_study.back.dto.response.studyService.DeleteStudyMaterialResponseDto;
 import com.godlife_study.back.dto.response.studyService.GetStudyMaterialListResponseDto;
 
@@ -226,6 +227,15 @@ public class StudyServiceController {
         return response;
     }
 
-
+    @DeleteMapping("/{studyNumber}/{studyMaterialNumber}/material-comment/{studyMaterialCommentNumber}")
+    public ResponseEntity<? super DeleteStudyMaterialCommentResponseDto> deleteMaterialComment(
+        @AuthenticationPrincipal String createStudyUserEmail,
+        @PathVariable("studyNumber") Integer studyNumber,
+        @PathVariable("studyMaterialNumber") Integer studyMaterialNumber,
+        @PathVariable("studyMaterialCommentNumber") Integer studyMaterialCommentNumber
+    ) {
+        ResponseEntity<? super DeleteStudyMaterialCommentResponseDto> response = studyService.deleteMaterialComment(createStudyUserEmail, studyNumber, studyMaterialNumber,studyMaterialCommentNumber);
+        return response;
+    }    
 
 }
