@@ -58,7 +58,7 @@ public class StudyServiceController {
     
     private final StudyService studyService;
 
-    @GetMapping("/service/{studyNumber}")
+    @GetMapping("/{studyNumber}")
     ResponseEntity<? super GetStudyResponseDto> getStudy(
         @PathVariable("studyNumber") Integer studyNumber,
         @AuthenticationPrincipal String userEmail) 
@@ -67,7 +67,7 @@ public class StudyServiceController {
         return response;
     }    
 
-    @GetMapping("/service/{studyNumber}/study-user-list")
+    @GetMapping("/{studyNumber}/study-user-list")
     public ResponseEntity<? super GetStudyUserListResponseDto> getStudyUserList(
         @PathVariable("studyNumber") Integer studyNumber,
         @AuthenticationPrincipal String userEmail) {
@@ -75,7 +75,7 @@ public class StudyServiceController {
         return response;
     }
 
-    @PostMapping("/service/{studyNumber}/study-user-list/{studyGrade}")
+    @PostMapping("/{studyNumber}/study-user-list/{studyGrade}")
     public ResponseEntity<? super PostStudyUserListResponseDto> postStudyUserList(
         @AuthenticationPrincipal String createStudyUserEmail,
         @PathVariable("studyNumber") Integer studyNumber,
