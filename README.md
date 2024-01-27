@@ -18,7 +18,7 @@
   
  ##### 개발언어 : Java 17 
  
- ##### 개발환경 : SpringBoot 3.2.0, Gradle 8.5,JPA(Spring Data JPA), Spring Security 
+ ##### 개발환경 : SpringBoot 3.2.0, Gradle 8.5
  
  ##### 데이터베이스 : MySQL 
  
